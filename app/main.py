@@ -16,5 +16,5 @@ def post_data(id: int):
 
 @app.get('/post/voice/add/{id}')
 def post_data(id: int):
-    return {"data": id}
+    return {"voiceId": id, "message": "Voice recieved"}
 
