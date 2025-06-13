@@ -13,8 +13,3 @@ def unpunlished_posts():
 @app.get('/post/{id}')
 def post_data(id: int):
     return {"data": id}
-
-@app.get('/post/voice/add/{id}')
-def post_data(id: int):
-    return {"voiceId": id, "message": "Voice recieved"}
-
