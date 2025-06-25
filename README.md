@@ -30,8 +30,8 @@ Cyvox-Server is the backend server for CyVox, a voice authentication and voice p
 Copy '.env.example' to '.env' and update environment variables as needed.
 
 ### Running the server
-'''bash 
-uvicorn main:app -- reload'''
+ 
+uvicorn main:app -- reload
 
 ## API Endpoints
 
@@ -50,4 +50,3 @@ uvicorn main:app -- reload'''
   ## License
 
   This project is license under the MIT license.
--
