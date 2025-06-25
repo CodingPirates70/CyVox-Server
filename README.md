@@ -20,10 +20,10 @@ Cyvox-Server is the backend server for CyVox, a voice authentication and voice p
   - FastAPI
   - SpeechBrain
 
-    ### Installation
-  git clone 
-cd CyVox-server
-pip install -r requirements.txt
+   ### Installation
+    git clone 
+    cd CyVox-server
+    pip install -r requirements.txt
 
 ### Configuration
 
@@ -31,7 +31,7 @@ Copy '.env.example' to '.env' and update environment variables as needed.
 
 ### Running the server
 '''bash 
-uvicorn main:app -- reload
+uvicorn main:app -- reload'''
 
 ## API Endpoints
 
