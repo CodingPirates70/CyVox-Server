@@ -1,55 +1,59 @@
-# Cyvox-server
+# CyVox-Server
 
 ## Overview
 
-Cyvox-Server is the backend server for CyVox, a voice authentication and voice platfor designed for law Enforcement Agencies (LEAs). It provides secure APIs for user enrollment, voiceprint management, and authentication workflows.
+CyVox-Server is the backend server for CyVox, a voice authentication and voice recognition platform designed for Law Enforcement Agencies (LEAs). It provides secure APIs for user enrollment, voiceprint management, and authentication workflows.
 
-## Features 
+## Features
 
-- RESTful API for voice enrollment and verification.
+- RESTful API for voice enrollment and verification
 - Secure user management and authentication
 - Integration with voice recognition and anti-spoofing models
 - Logging and audit trails for compliance
-- Scable and modular architecture.
+- Scalable and modular architecture
 
-  ## Getting started
+## Getting Started
 
-  ### Prerequisites
-  - Python (3.10+)
-  - MongoDB
-  - FastAPI
-  - SpeechBrain
+### Prerequisites
 
-   ### Installation
+- Python (3.10+)
+- MongoDB
+- FastAPI
+- SpeechBrain
 
+### Installation
 
-- git clone : https://github.com/CodingPirates70/CyVox-Server.git
-- cd CyVox-server
-- pip install -r requirements.txt
-
+```bash
+git clone https://github.com/CodingPirates70/CyVox-Server.git
+cd CyVox-Server
+pip install -r requirements.txt
+```
 
 ### Configuration
 
-Copy '.env.example' to '.env' and update environment variables as needed.
+Copy `.env.example` to `.env` and update environment variables as needed.
 
-### Running the server
- 
-uvicorn main:app -- reload
+### Running the Server
+
+```bash
+uvicorn main:app --reload
+```
 
 ## API Endpoints
 
-- 'POST/auth/register' - Enroll a new user and it's voice
--  'POST/Complaint/register' - Registers a user's complaints with necessary Metadata
--  'GET/user/:id' - Retrieve complaint details
+- `POST /auth/register` — Enroll a new user and its voice
+- `POST /complaint/register` — Registers a user's complaints with nessecary Metadata
+- `GET /user/:id` — Retrieve user details
+- `GET /complaint/:id` — Retrieve complaint details
 
-  See API Documentation at '/docs' after running the server for full details.
+See API Documentation at `/docs` after running the server for full details.
 
-  ## Security
+## Security
 
 - All endpoints require authentication (JWT)
-- Voice fata is encrypted at rest and in transit
-- Role- based access control for LEA personel
+- Voice data is encrypted at rest and in transit
+- Role-based access control for LEA personnel
 
-  ## License
+## License
 
-  This project is license under the MIT license.
+This project is licensed under the MIT License.

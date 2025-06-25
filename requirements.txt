@@ -6,12 +6,14 @@ cloudinary
 python-dotenv
 pydantic[email]
 python-multipart
-torch==2.1.2
-torchaudio==2.1.2
-speechbrain==0.5.15
+torch
+torchaudio
+torchvision
+speechbrain
 pyannote.audio==3.1.1
 pydub
 ffmpeg-python
 numpy==1.24.4
 huggingface-hub
 requests==2.31.0
+librosa
