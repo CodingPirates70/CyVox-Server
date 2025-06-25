@@ -37,3 +37,4 @@ dist/
 *.code-workspace
 
 *.pth
+temp_audio/
