@@ -23,9 +23,9 @@ Cyvox-Server is the backend server for CyVox, a voice authentication and voice p
    ### Installation
 
 '''bash
-    git clone : https://github.com/CodingPirates70/CyVox-Server.git
-    cd CyVox-server
-    pip install -r requirements.txt
+- git clone : https://github.com/CodingPirates70/CyVox-Server.git
+- cd CyVox-server
+- pip install -r requirements.txt
 '''
 
 ### Configuration
