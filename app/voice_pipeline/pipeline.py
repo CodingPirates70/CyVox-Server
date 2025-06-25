@@ -190,6 +190,6 @@ async def process_complaint_audio(user_id: str, complaint_id: str, sample_url: s
     print(f"Audio processing for user {user_id} complete.\n")
     
     # Clean up temp directory
-    shutil.rmtree("./temp_audio", ignore_errors=True)
+    # shutil.rmtree("./temp_audio", ignore_errors=True)
     
     return matches, user_scammer_audio_url

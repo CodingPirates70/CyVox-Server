@@ -124,6 +124,19 @@ async def register_complain(
             "updatedAt": datetime.now(timezone.utc)
         }}
     )
+    
+    for result in results:
+        scammer_complain_collection.update_one(
+            {"_id": ObjectId(result["complaintId"])},
+            {
+                "$push": {
+                    "matchedScammerComplaints": {
+                        "complaintId": complaint_id,
+                        "similarity": result["similarity"]
+                    }
+                }
+            }
+        )
 
     return {
         "message" : "Complaint registered successfully",
