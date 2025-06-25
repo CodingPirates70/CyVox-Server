@@ -1,11 +1,11 @@
 from datetime import datetime
 
 def complaint_serializer(complaint) -> dict:
-    matched_results = []
-    for result in complaint.get("matchedResults", []):
-        matched_results.append({
-            "matched_id": str(result["matched_id"]),
-            "matched_score": result["matched_score"]
+    matched_scammer_complaints = []
+    for result in complaint.get("matchedScammerComplaints", []):
+        matched_scammer_complaints.append({
+            "matchedId": str(result.get("complaintId")),
+            "matchedScore": result.get("similarity")
         })
 
     return {
@@ -29,9 +29,9 @@ def complaint_serializer(complaint) -> dict:
         "createdAt": complaint.get("createdAt").isoformat() if isinstance(complaint.get("createdAt"), datetime) else complaint.get("createdAt"),
         "updatedAt": complaint.get("updatedAt").isoformat() if isinstance(complaint.get("updatedAt"), datetime) else complaint.get("updatedAt"),
         "scammerAudioUrl": complaint.get("userScammerAudioUrl"),
-        "matchedResults": matched_results
+        "matchedResults": matched_scammer_complaints
     }
-
     
+
 def complaint_list_serializer(complaints) -> list:
     return [complaint_serializer(c) for c in complaints]
