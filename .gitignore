@@ -38,3 +38,4 @@ dist/
 
 *.pth
 temp_audio/
+pretrained_models/
