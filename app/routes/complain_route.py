@@ -160,11 +160,13 @@ async def get_all_complaints(request: Request):
 @router.get("/{userId}", status_code=status.HTTP_200_OK, summary="Get Complaints By UserID")
 async def get_complaint_by_userId(userId: str, request: Request):
     scammer_complain_collection = request.app.state.db["scammer_complaints"]
-    complaints = list(scammer_complain_collection.find_many({"userId": ObjectId(userId)}))
+    complaints = complaint_list_serializer(scammer_complain_collection.find({"userId": ObjectId(userId)}))
 
-    for complaint in complaints:
-        complaint["_id"] = str(complaint["_id"])
-        complaint["userId"] = str(complaint["userId"])
+    if not complaints:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail={"error": "No complaints in the DB for the userId"}
+        )
 
     return {"complaints": complaints}
 
