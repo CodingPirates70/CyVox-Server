@@ -26,10 +26,11 @@ def complaint_serializer(complaint) -> dict:
         "complainSubject": complaint.get("complainSubject"),
         "incidentDescription": complaint.get("incidentDescription"),
         "moneyScammed": complaint.get("moneyScammed"),
+        "dateOfIncident": complaint.get("dateOfIncident").isoformat() if isinstance(complaint.get("dateOfIncident"), datetime) else complaint.get("dateOfIncident"),
         "createdAt": complaint.get("createdAt").isoformat() if isinstance(complaint.get("createdAt"), datetime) else complaint.get("createdAt"),
         "updatedAt": complaint.get("updatedAt").isoformat() if isinstance(complaint.get("updatedAt"), datetime) else complaint.get("updatedAt"),
         "scammerAudioUrl": complaint.get("userScammerAudioUrl"),
-        "matchedResults": matched_scammer_complaints
+        "matchedScammerComplaints": matched_scammer_complaints
     }
     
 
