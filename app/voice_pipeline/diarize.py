@@ -11,6 +11,9 @@ pipeline = Pipeline.from_pretrained(
     use_auth_token=HF_TOKEN
 )
 
+def is_valid_segment(seg: AudioSegment, min_sec=0.5):
+        return len(seg) / 1000.0 > min_sec
+
 def diarize_audio(audio_path: Path, output_dir: Path, pipeline):
     # Ensure output directory exists
     output_dir.mkdir(parents=True, exist_ok=True)
@@ -29,6 +32,10 @@ def diarize_audio(audio_path: Path, output_dir: Path, pipeline):
         print(f"{speaker} -> {segment.start:.2f}s to {segment.end:.2f}s")
 
         chunk = audio[start_ms:end_ms]
+        
+        if not is_valid_segment(chunk):
+            print(f"⛔ Skipping short segment for {speaker} ({(end_ms - start_ms) / 1000:.2f}s)")
+            continue
 
         if speaker not in speaker_wavs:
             speaker_wavs[speaker] = chunk

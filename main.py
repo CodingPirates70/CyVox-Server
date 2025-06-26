@@ -6,6 +6,7 @@ from app.routes.user_route import user_router
 from app.routes.auth_route import auth_router
 from app.routes.complain_route import complain_router
 from app.routes.upload_audio_route import upload_audio_router
+from app.routes.mail_route import mail_router
 from app.voice_pipeline.init_model import init_voice_models
 
 origins = [
@@ -65,3 +66,4 @@ app.include_router(auth_router, prefix="/auth", tags=["Auth"])
 app.include_router(user_router, prefix="/user", tags=["Users"])
 app.include_router(complain_router, prefix="/complaint", tags=["Complaint"])
 app.include_router(upload_audio_router, tags=["Upload"])
+app.include_router(mail_router, tags=["Mail"])

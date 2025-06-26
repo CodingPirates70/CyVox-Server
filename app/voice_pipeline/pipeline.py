@@ -21,14 +21,14 @@ from .compare_embeddings import compare_with_existing_scammer_embeddings
 def ensure_dir(path):
     os.makedirs(path, exist_ok=True)
 
-def is_valid_audio(path):
-    try:
-        info = mediainfo(str(path))
-        duration = float(info.get("duration", 0))
-        return duration > 0.5  # skip very short audio
-    except Exception as e:
-        print(f"⚠️ Failed to read audio info for {path}: {e}")
-        return False
+# def is_valid_audio(path):
+#     try:
+#         info = mediainfo(str(path))
+#         duration = float(info.get("duration", 0))
+#         return duration > 0.5  # skip very short audio
+#     except Exception as e:
+#         print(f"⚠️ Failed to read audio info for {path}: {e}")
+#         return False
 
 def download_file(url, save_path):
     r = requests.get(url)
@@ -97,11 +97,11 @@ async def process_complaint_audio(user_id: str, complaint_id: str, sample_url: s
     skipped_segments = []
     
     for file in diarized_dir.glob("SPEAKER_*.wav"):
-        if not is_valid_audio(file):
-            reason = "invalid/short audio"
-            print(f"⛔ Skipping {file.name} ({reason})")
-            skipped_segments.append({"file": file.name, "reason": reason})
-            continue
+        # if not is_valid_audio(file):
+        #     reason = "invalid/short audio"
+        #     print(f"⛔ Skipping {file.name} ({reason})")
+        #     skipped_segments.append({"file": file.name, "reason": reason})
+        #     continue
 
         try:
             result = recognizer.verify_files(str(sample_wav), str(file))

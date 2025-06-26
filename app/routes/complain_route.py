@@ -1,12 +1,12 @@
 from fastapi import APIRouter, status, HTTPException, Request, Form, UploadFile, File
 from app.schemas.user_schema import user_serializer, user_list_serializer
-from bson import ObjectId
+from bson import ObjectId, errors
 from datetime import datetime, timezone
 from typing import Optional
 from pydantic import EmailStr
 from ..utils.cloudinary_upload import upload_audio_to_cloudinary
 from app.voice_pipeline.pipeline import process_complaint_audio
-from ..schemas.complaint_schema import complaint_list_serializer
+from ..schemas.complaint_schema import complaint_list_serializer, complaint_serializer
 
 router = APIRouter()
 
@@ -142,6 +142,7 @@ async def register_complain(
 
     return {
         "message" : "Complaint registered successfully",
+        "email": email,
         "complaint details": complain_dict
     }
 
@@ -157,10 +158,36 @@ async def get_all_complaints(request: Request):
         )
     return {"All complaints": complaints}
 
-@router.get("/{userId}", status_code=status.HTTP_200_OK, summary="Get Complaints By UserID")
+@router.get("/{complaintId}", status_code=status.HTTP_200_OK, summary="Get Complaints By complaintID")
+async def get_complaint_by_complaintId(complaintId: str, request: Request):
+    scammer_complain_collection = request.app.state.db["scammer_complaints"]
+
+    try:
+        complaint_obj_id = ObjectId(complaintId)
+    except errors.InvalidId:
+        raise HTTPException(status_code=400, detail="Invalid complaintId format")
+    
+    raw_complaint = scammer_complain_collection.find_one({"_id": complaint_obj_id})
+
+    if not raw_complaint:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail={"error": "No complaint in the DB for the given complaintId"}
+        )
+
+    complaint = complaint_serializer(raw_complaint)
+    return {"complaint_detail": complaint}
+
+@router.get("/user/{userId}", status_code=status.HTTP_200_OK, summary="Get Complaints By UserID")
 async def get_complaint_by_userId(userId: str, request: Request):
     scammer_complain_collection = request.app.state.db["scammer_complaints"]
-    complaints = complaint_list_serializer(scammer_complain_collection.find({"userId": ObjectId(userId)}))
+    
+    try:
+        user_id_obj = ObjectId(userId)
+    except errors.InvalidId:
+        raise HTTPException(status_code=400, detail="Invalid userId format")
+    
+    complaints = complaint_list_serializer(scammer_complain_collection.find({"userId": user_id_obj}))
 
     if not complaints:
         raise HTTPException(
@@ -170,18 +197,18 @@ async def get_complaint_by_userId(userId: str, request: Request):
 
     return {"complaints": complaints}
 
-@router.get("/clerkId/{clerkId}", status_code=status.HTTP_200_OK, summary="Get Complaints By ClerkID")
-async def get_complaint_by_clerkId(clerkId: str, request: Request):
-    scammer_complain_collection = request.app.state.db["scammer_complaints"]
-    complaints = complaint_list_serializer(scammer_complain_collection.find({"clerkUserId": clerkId}))
+# @router.get("/clerkId/{clerkId}", status_code=status.HTTP_200_OK, summary="Get Complaints By ClerkID")
+# async def get_complaint_by_clerkId(clerkId: str, request: Request):
+#     scammer_complain_collection = request.app.state.db["scammer_complaints"]
+#     complaints = complaint_list_serializer(scammer_complain_collection.find({"clerkUserId": clerkId}))
     
-    # complaints = complaint_list_serializer(scammer_complain_collection.find())
+#     # complaints = complaint_list_serializer(scammer_complain_collection.find())
     
-    if not complaints:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail={"error": "No complaints in the DB with the given clerkId"}
-        )
-    return {"complaints": complaints}
+#     if not complaints:
+#         raise HTTPException(
+#             status_code=status.HTTP_404_NOT_FOUND,
+#             detail={"error": "No complaints in the DB with the given clerkId"}
+#         )
+#     return {"complaints": complaints}
 
 complain_router = router
