@@ -29,7 +29,8 @@ async def register_complain(
     streetAddress: str = Form(...),
     complainSubject: str = Form(...),
     incidentDescription: str = Form(...),
-    moneyScammed: int = Form(...)
+    moneyScammed: int = Form(...), 
+    dateOfIncident: str = Form(...),
 ):
     try:
         user_obj_id = ObjectId(userId)
@@ -57,6 +58,7 @@ async def register_complain(
         "complainSubject": complainSubject,
         "incidentDescription": incidentDescription,
         "moneyScammed": moneyScammed,
+        "dateOfIncident":dateOfIncident,
         "createdAt": datetime.now(timezone.utc),
         "updatedAt": datetime.now(timezone.utc),
     }
