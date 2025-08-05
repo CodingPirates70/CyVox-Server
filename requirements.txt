@@ -17,3 +17,5 @@ numpy==1.24.4
 huggingface-hub
 requests==2.31.0
 librosa
+setuptools>=42
+wheel
